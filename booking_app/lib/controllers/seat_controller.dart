@@ -31,8 +31,7 @@ class SeatController {
     }
   }
 
-  Future<List<SeatModel>> lockSeat(
-      String train, String seat) async {
+  Future<List<SeatModel>> lockSeat(String train, String seat) async {
     try {
       http.Response response =
           await http.patch(Uri.parse("$uri/api/seat/lock-seat"),
@@ -60,7 +59,7 @@ class SeatController {
     }
   }
 
-    Future<List<SeatModel>> unlockSeat(String train, String seat) async {
+  Future<List<SeatModel>> unlockSeat(String train, String seat) async {
     try {
       http.Response response =
           await http.patch(Uri.parse("$uri/api/seat/unlock-seat"),
@@ -87,4 +86,66 @@ class SeatController {
       throw Exception('Error load Train');
     }
   }
+
+  Future<List<SeatModel>> bookSeat(
+      String train, List<SeatModel> seats, String owner) async {
+    List<SeatModel> bookedSeats = [];
+    try {
+      // Loop through each seat number
+      for (SeatModel seat in seats) {
+        http.Response response =
+            await http.patch(Uri.parse("$uri/api/seat/book-seat"),
+                headers: <String, String>{
+                  'Content-Type': 'application/json; charset=utf-8',
+                },
+                body: jsonEncode({
+                  'train': train,
+                  'seatNumber': seat.seatNumber,
+                  'owner': owner,
+                }));
+
+        debugPrint(response.body);
+
+        if (response.statusCode == 200) {
+          dynamic data = jsonDecode(response.body);
+          SeatModel bookedSeat = SeatModel.fromJson(data);
+          bookedSeats.add(bookedSeat);
+        } else {
+          throw Exception('Failed to book seat: $seat');
+        }
+      }
+      return bookedSeats;
+    } catch (e) {
+      throw Exception('Error booking seats: $e');
+    }
+  }
+
+  // Future<List<SeatModel>> bookSeat(
+  //     String train, List<String> seat, String owner) async {
+  //   try {
+  //     http.Response response =
+  //         await http.patch(Uri.parse("$uri/api/seat/book-seat"),
+  //             headers: <String, String>{
+  //               'Content-Type': 'application/json; charset=utf-8',
+  //             },
+  //             body: jsonEncode({
+  //               'train': train,
+  //               'seatNumber': seat,
+  //               'owner': owner,
+  //             }));
+
+  //     debugPrint(response.body);
+
+  //     if (response.statusCode == 200) {
+  //       List<dynamic> data = jsonDecode(response.body);
+  //       List<SeatModel> trains =
+  //           data.map((train) => SeatModel.fromJson(train)).toList();
+  //       return trains;
+  //     } else {
+  //       throw Exception('Failed to load Train');
+  //     }
+  //   } catch (e) {
+  //     throw Exception('Error load Train');
+  //   }
+  // }
 }

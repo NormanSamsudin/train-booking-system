@@ -17,27 +17,14 @@ seatRouter.get("/api/seat/:id/:coach", async (req, res) => {
   }
 });
 
-// seatRouter.get("/api/seat/:id", async (req, res) => {
-//   try {
-//     const availableSeats = await Seat.find({
-//       train: req.params.id,
-//       seatNumber: 
-//     });
-//     res.status(200).json(availableSeats);
-//   } catch (error) {
-//     return res.status(400).json({ msg: "Error fetching seat" });
-//   }
-// });
-
 //Book a seat
-seatRouter.post("/api/seat/:trainId/book-seat", async (req, res) => {
-  const { seatNumber, owner } = req.body;
+seatRouter.patch("/api/seat/book-seat", async (req, res) => {
+  const { seatNumber, owner, train } = req.body;
 
   try {
     const seat = await Seat.findOne({
-      train: req.params.trainId,
+      train: train,
       seatNumber: seatNumber,
-      status: "available",
     });
 
     if (!seat) {
