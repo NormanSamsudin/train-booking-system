@@ -4,7 +4,7 @@ const Seat = require("../models/seat");
 const seatRouter = express.Router();
 
 // get list of seat based on trainId
-seatRouter.get("/train/:plateNumber/available-seats", async (req, res) => {
+seatRouter.get("/api/seat/:plateNumber/available-seats", async (req, res) => {
   try {
     const availableSeats = await Seat.find({
       train: req.params.trainId,
@@ -12,12 +12,12 @@ seatRouter.get("/train/:plateNumber/available-seats", async (req, res) => {
     });
     res.status(200).json(availableSeats);
   } catch (error) {
-   return res.status(400).json({ msg: "Error fetching seat" });
+    return res.status(400).json({ msg: "Error fetching seat" });
   }
 });
 
 //Book a seat
-seatRouter.post("/train/:trainId/book-seat", async (req, res) => {
+seatRouter.post("/api/seat/:trainId/book-seat", async (req, res) => {
   const { seatNumber, owner } = req.body;
 
   try {
@@ -45,7 +45,7 @@ seatRouter.post("/train/:trainId/book-seat", async (req, res) => {
 });
 
 // lock seat
-seatRouter.post("/train/:trainId/book-seat", async (req, res) => {
+seatRouter.post("/api/seat/:trainId/book-seat", async (req, res) => {
   const { seatNumber } = req.body;
 
   try {

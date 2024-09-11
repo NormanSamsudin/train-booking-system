@@ -1,3 +1,4 @@
+import 'package:booking_app/views/screens/nav_screens/widgets/train_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:booking_app/views/screens/nav_screens/widgets/header_widget.dart';
 
@@ -8,7 +9,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
         body: Column(
-      children: [HeaderWidget(),],
+      children: [HeaderWidget(), TrainCardWidget()
+      
+      ],
     ));
   }
 }

@@ -31,25 +31,13 @@ class _MainScreenState extends State<MainScreen> {
                 'assets/icons/home.png',
                 width: 25,
               ),
-              label: "Home"),
-          BottomNavigationBarItem(
-              icon: Image.asset(
-                'assets/icons/love.png',
-                width: 25,
-              ),
-              label: "Favourite"),
-          BottomNavigationBarItem(
-              icon: Image.asset(
-                'assets/icons/mart.png',
-                width: 25,
-              ),
-              label: "Stores"),
+              label: "Booking"),
           BottomNavigationBarItem(
               icon: Image.asset(
                 'assets/icons/cart.png',
                 width: 25,
               ),
-              label: "Cart"),
+              label: "History"),
           BottomNavigationBarItem(
               icon: Image.asset(
                 'assets/icons/user.png',

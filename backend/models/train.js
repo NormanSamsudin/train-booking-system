@@ -5,12 +5,13 @@ const trainSchema = mongoose.Schema({
   plateNumber: {
     type: String,
     required: true,
+    unique: true,
   },
-  startDates: {
-    type: [Date],
+  startDateTime: {
+    type: Date,
     required: true,
   },
-  startLocation: {
+  waitingGate: {
     type: String,
     required: true,
   },
@@ -26,3 +27,12 @@ const trainSchema = mongoose.Schema({
 
 const Train = mongoose.model("Train", trainSchema);
 module.exports = Train;
+
+
+// {
+//   "plateNumber": "A123",
+//   "startDates": "2024-09-10",
+//   "fromLocation": "Station A",
+//   "toLocation": "City B",
+//   "waitingGate" : "11"
+// }

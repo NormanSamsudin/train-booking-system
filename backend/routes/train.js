@@ -4,12 +4,12 @@ const Train = require("../models/train");
 const trainRouter = express.Router();
 
 // 1. Add train schedule
-trainRouter.post("/add-train", async (req, res) => {
+trainRouter.post("/api/train/add-train-schedule", async (req, res) => {
   try {
     const {
       plateNumber,
-      startDates,
-      startLocation,
+      startDateTime,
+      waitingGate,
       fromLocation,
       toLocation,
     } = req.body;
@@ -17,8 +17,8 @@ trainRouter.post("/add-train", async (req, res) => {
     // Validate required fields
     if (
       !plateNumber ||
-      !startDates ||
-      !startLocation ||
+      !startDateTime ||
+      !waitingGate ||
       !fromLocation ||
       !toLocation
     ) {
@@ -28,8 +28,8 @@ trainRouter.post("/add-train", async (req, res) => {
     // Create a new train
     const newTrain = new Train({
       plateNumber,
-      startDates,
-      startLocation,
+      startDateTime,
+      waitingGate,
       fromLocation,
       toLocation,
     });
