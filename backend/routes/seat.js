@@ -3,18 +3,31 @@ const Seat = require("../models/seat");
 
 const seatRouter = express.Router();
 
-// get list of seat based on trainId
-seatRouter.get("/api/seat/:plateNumber/available-seats", async (req, res) => {
+// get list of seat based on plateNumber
+seatRouter.get("/api/seat/:id/:coach", async (req, res) => {
   try {
+    const coachLetter = req.params.coach;
     const availableSeats = await Seat.find({
-      train: req.params.trainId,
-      status: "available",
+      train: req.params.id,
+      seatNumber: { $regex: new RegExp(`^${coachLetter}`, "i") }, // Dynamically insert the coach letter
     });
     res.status(200).json(availableSeats);
   } catch (error) {
     return res.status(400).json({ msg: "Error fetching seat" });
   }
 });
+
+// seatRouter.get("/api/seat/:id", async (req, res) => {
+//   try {
+//     const availableSeats = await Seat.find({
+//       train: req.params.id,
+//       seatNumber: 
+//     });
+//     res.status(200).json(availableSeats);
+//   } catch (error) {
+//     return res.status(400).json({ msg: "Error fetching seat" });
+//   }
+// });
 
 //Book a seat
 seatRouter.post("/api/seat/:trainId/book-seat", async (req, res) => {
@@ -45,12 +58,12 @@ seatRouter.post("/api/seat/:trainId/book-seat", async (req, res) => {
 });
 
 // lock seat
-seatRouter.post("/api/seat/:trainId/book-seat", async (req, res) => {
-  const { seatNumber } = req.body;
+seatRouter.patch("/api/seat/lock-seat", async (req, res) => {
+  const { seatNumber, train } = req.body;
 
   try {
     const seat = await Seat.findOne({
-      train: req.params.trainId,
+      train: train,
       seatNumber: seatNumber,
       status: "available",
     });
@@ -63,6 +76,32 @@ seatRouter.post("/api/seat/:trainId/book-seat", async (req, res) => {
 
     // Update seat status to "booked"
     seat.status = "locked";
+    await seat.save();
+
+    res.status(200).json({ message: "Seat locked", seat });
+  } catch (error) {
+    res.status(500).json({ message: "Error booking seat", error });
+  }
+});
+
+seatRouter.patch("/api/seat/unlock-seat", async (req, res) => {
+  const { seatNumber, train } = req.body;
+
+  try {
+    const seat = await Seat.findOne({
+      train: train,
+      seatNumber: seatNumber,
+      status: "locked",
+    });
+
+    if (!seat) {
+      return res
+        .status(404)
+        .json({ message: "Seat not available for booking" });
+    }
+
+    // Update seat status to "booked"
+    seat.status = "available";
     await seat.save();
 
     res.status(200).json({ message: "Seat locked", seat });

@@ -41,21 +41,10 @@ class BookingDetailsScreen extends StatelessWidget {
                 const TitleWidget(title: 'Train Details'),
                 TrainCardDetailWidget(train: train),
                 const TitleWidget(title: 'Select Coach'),
-                CoachWidget()
-                // const Padding(
-                //   padding: EdgeInsets.only(left: 50, top: 15),
-                //   child: SizedBox(
-                //     child: Row(
-                //       children: [
-                //         SeatCardDetailsWidget(),
-                //         SeatCardDetailsWidget(),
-                //         SizedBox(width: 50,),
-                //         SeatCardDetailsWidget(),
-                //         SeatCardDetailsWidget(),
-                //       ],
-                //     ),
-                //   ),
-                // )
+                CoachWidget(
+                  train: train,
+                ),
+
               ],
             ),
           ),

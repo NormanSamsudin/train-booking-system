@@ -71,6 +71,7 @@ class _TrainCardWidgetState extends State<TrainCardWidget> {
                         ),
                       ),
                       onTap: () {
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
