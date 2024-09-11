@@ -71,6 +71,40 @@ seatRouter.post("/api/seat/:trainId/book-seat", async (req, res) => {
   }
 });
 
+// Add seat for a train
+seatRouter.post("/api/seat/add-seat/:train", async (req, res) => {
+  try {
+    const { seatNumber, status } = req.body;
+    const train = req.params.train;
 
+    // Validate required fields
+    if (!train || !seatNumber || !status) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    // Check if the plateNumber is unique
+    const existingSeat = await Seat.findOne({ seatNumber });
+    if (existingSeat) {
+      return res.status(400).json({ message: "Seat already exists" });
+    }
+
+    const newSeat = new Seat({
+      train,
+      seatNumber,
+      status,
+    });
+
+    // Save the new train schedule to the database
+    await newSeat.save();
+
+    return res
+      .status(201)
+      .json({ message: "Seat added successfully", seat: newSeat });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Server error", error: error.message });
+  }
+});
 
 module.exports = seatRouter;

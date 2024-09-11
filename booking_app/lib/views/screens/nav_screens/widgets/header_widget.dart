@@ -52,23 +52,23 @@ class HeaderWidget extends StatelessWidget {
                   ),
                 ),
               )),
-          Positioned(
-            left: 354,
-            top: 78,
-            child: Material(
-              child: InkWell(
-                onTap: () {},
-                child: Ink(
-                  width: 31,
-                  height: 31,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/icons/message.png')),
-                  ),
-                ),
-              ),
-            ),
-          )
+          // Positioned(
+          //   left: 354,
+          //   top: 78,
+          //   child: Material(
+          //     child: InkWell(
+          //       onTap: () {},
+          //       child: Ink(
+          //         width: 31,
+          //         height: 31,
+          //         decoration: const BoxDecoration(
+          //           image: DecorationImage(
+          //               image: AssetImage('assets/icons/message.png')),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );

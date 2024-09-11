@@ -9,9 +9,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
         body: Column(
-      children: [HeaderWidget(), TrainCardWidget()
-      
-      ],
+      children: [HeaderWidget(), TrainCardWidget()],
     ));
   }
 }
