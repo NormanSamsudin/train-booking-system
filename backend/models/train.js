@@ -23,6 +23,10 @@ const trainSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  price: {
+    type:String,
+    required: true,
+  }
 });
 
 const Train = mongoose.model("Train", trainSchema);

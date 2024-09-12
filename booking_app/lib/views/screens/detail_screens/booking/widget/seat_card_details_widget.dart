@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:booking_app/controllers/auth_controller.dart';
 import 'package:booking_app/controllers/seat_controller.dart';
 import 'package:booking_app/models/seat.dart';
@@ -21,6 +23,7 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
   late Future<List<SeatModel>> futureSeat;
   List<SeatModel> seat = [];
   List<SeatModel> selectedSeats = [];
+  double price = 0;
   var fullName;
 
   @override
@@ -110,6 +113,7 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                                       seat[index].status = 'locked';
                                       selectedSeats.add(
                                           seat[index]); // Add to selected seats
+                                      price += double.parse(widget.train.price);
                                     });
                                   } else if (seat[index].status == 'locked') {
                                     if (selectedSeats.contains(seat[index])) {
@@ -120,6 +124,8 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                                         seat[index].status = 'available';
                                         selectedSeats.remove(seat[
                                             index]); // Remove from selected seats
+                                        price -=
+                                            double.parse(widget.train.price);
                                       });
                                       selectedSeats.remove(seat[index]);
                                     } else {
@@ -146,22 +152,35 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                 Row(
                   children: [
                     const Spacer(),
+                    Text(
+                      'Total: RM ${price.toString()}',
+                      style: GoogleFonts.getFont(
+                        'Lato',
+                        color: const Color(0xFF0d120E),
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.2,
+                        fontSize: 15,
+                      ),
+                    ),
+                    const Spacer(),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(204, 255, 255, 255),
-                        shadowColor: const Color.fromARGB(255, 201, 201, 201),
-                        foregroundColor: Colors.black
-                      ),
+                          backgroundColor:
+                              const Color.fromARGB(204, 255, 255, 255),
+                          shadowColor: const Color.fromARGB(255, 201, 201, 201),
+                          foregroundColor: Colors.black),
                       child: const Text(
                         'Cancel',
                         style:
                             TextStyle(letterSpacing: 1.5, color: Colors.black),
                       ),
                     ),
-                    const SizedBox(width: 15,),
+                    const SizedBox(
+                      width: 15,
+                    ),
                     ElevatedButton(
                       onPressed: () {
                         for (var select in selectedSeats) {

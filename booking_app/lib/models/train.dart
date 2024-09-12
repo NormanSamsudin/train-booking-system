@@ -7,6 +7,7 @@ class TrainModel {
   final String waitingGate;
   final String fromLocation;
   final String toLocation;
+  final String price;
 
   TrainModel({
     required this.id,
@@ -15,6 +16,7 @@ class TrainModel {
     required this.waitingGate,
     required this.fromLocation,
     required this.toLocation,
+    required this.price,
   });
 
   Map<String, dynamic> toMap() {
@@ -24,7 +26,8 @@ class TrainModel {
       "startDateTime": startDateTime,
       "waitingGate": waitingGate,
       "fromLocation": fromLocation,
-      "toLocation": toLocation
+      "toLocation": toLocation,
+      'price': price
     };
   }
 
@@ -38,6 +41,7 @@ class TrainModel {
       waitingGate: map['waitingGate'] as String,
       fromLocation: map['fromLocation'] as String,
       toLocation: map['toLocation'] as String,
+      price: map['price'] as String,
     );
   }
 }
