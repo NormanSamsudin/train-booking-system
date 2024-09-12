@@ -1,6 +1,10 @@
 ## Simple Train Booking System
 Mobile application that powered by flutter framework for the backend and Node.js for the backend. The key feature of the app is the ability to lock a seat on a first come first serve basis. 
 
+## Video Demonstration
+
+[![Video](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=3DQKINj_IDg)
+
 ## Installation
 
 You can ignore this part
@@ -37,7 +41,18 @@ To deploy this project on your local machine
   npm run start
 ```
 
-## Start Flutter
+## Flutter
+
+### Local IP Address
+
+Change value of ip address on page global_variable.dart. Check your ip address on bash command.
+
+```bash
+  ipconfig //windows
+  ifconfig //linux
+```
+
+### Run Flutter
 
 To deploy this flutter projectrun on your local machine
 
