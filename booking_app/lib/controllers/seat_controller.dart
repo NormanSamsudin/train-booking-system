@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:ffi';
 
+import 'package:booking_app/controllers/auth_controller.dart';
 import 'package:booking_app/models/seat.dart';
 import 'package:flutter/material.dart';
 import 'package:booking_app/models/train.dart';
@@ -7,7 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:booking_app/global_variable.dart';
 
 class SeatController {
-  // fetch banner
+  // fetch
   Future<List<SeatModel>> loadSeats(String param, String coach) async {
     try {
       http.Response response = await http.get(
@@ -31,7 +33,7 @@ class SeatController {
     }
   }
 
-  Future<List<SeatModel>> lockSeat(String train, String seat) async {
+  Future<void> lockSeat(String train, String seat) async {
     try {
       http.Response response =
           await http.patch(Uri.parse("$uri/api/seat/lock-seat"),
@@ -47,19 +49,20 @@ class SeatController {
       debugPrint(response.body);
 
       if (response.statusCode == 200) {
-        List<dynamic> data = jsonDecode(response.body);
-        List<SeatModel> trains =
-            data.map((train) => SeatModel.fromJson(train)).toList();
-        return trains;
+        debugPrint('locked successfully');
+        // List<dynamic> data = jsonDecode(response.body);
+        // List<SeatModel> trains =
+        //     data.map((train) => SeatModel.fromJson(train)).toList();
+        // return trains;
       } else {
-        throw Exception('Failed to load Train');
+        throw Exception('Failed to lock seat');
       }
     } catch (e) {
-      throw Exception('Error load Train');
+      throw Exception('Error lock seat $e');
     }
   }
 
-  Future<List<SeatModel>> unlockSeat(String train, String seat) async {
+  Future<void> unlockSeat(String train, String seat) async {
     try {
       http.Response response =
           await http.patch(Uri.parse("$uri/api/seat/unlock-seat"),
@@ -75,10 +78,11 @@ class SeatController {
       debugPrint(response.body);
 
       if (response.statusCode == 200) {
-        List<dynamic> data = jsonDecode(response.body);
-        List<SeatModel> trains =
-            data.map((train) => SeatModel.fromJson(train)).toList();
-        return trains;
+        debugPrint('locked successfully');
+        // List<dynamic> data = jsonDecode(response.body);
+        // List<SeatModel> trains =
+        //     data.map((train) => SeatModel.fromJson(train)).toList();
+        // return trains;
       } else {
         throw Exception('Failed to load Train');
       }
@@ -87,10 +91,11 @@ class SeatController {
     }
   }
 
-  Future<List<SeatModel>> bookSeat(
-      String train, List<SeatModel> seats, String owner) async {
+  Future<void> bookSeat(
+      String train, List<SeatModel> seats, Future<String> owner) async {
     List<SeatModel> bookedSeats = [];
     try {
+      String fullName = await AuthController().getUserData();
       // Loop through each seat number
       for (SeatModel seat in seats) {
         http.Response response =
@@ -101,7 +106,7 @@ class SeatController {
                 body: jsonEncode({
                   'train': train,
                   'seatNumber': seat.seatNumber,
-                  'owner': owner,
+                  'owner': fullName,
                 }));
 
         debugPrint(response.body);
@@ -110,11 +115,12 @@ class SeatController {
           dynamic data = jsonDecode(response.body);
           SeatModel bookedSeat = SeatModel.fromJson(data);
           bookedSeats.add(bookedSeat);
+          debugPrint('Seat: ${seat.seatNumber} booked');
         } else {
           throw Exception('Failed to book seat: $seat');
         }
       }
-      return bookedSeats;
+      //return bookedSeats;
     } catch (e) {
       throw Exception('Error booking seats: $e');
     }

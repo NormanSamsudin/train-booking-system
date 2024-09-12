@@ -121,4 +121,27 @@ class AuthController {
       showSnackBar(context, 'error logging out');
     }
   }
+
+  Future<void> getAuthToken() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    debugPrint('my token ${preferences.getString('auth_token')}');
+  }
+
+  Future<String> getUserData() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    // Retrieve the stored user data as a JSON string
+    String? userDataString = preferences.getString('user');
+
+    if (userDataString != null) {
+      // Decode the JSON string to a map
+      Map<String, dynamic> userMap = jsonDecode(userDataString);
+
+      // Return the fullName from the map
+      debugPrint('fullName: ' + userMap['fullName']);
+      return userMap['fullName'].toString();
+    } else {
+     return '';
+    }
+  }
 }

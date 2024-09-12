@@ -3,19 +3,41 @@ const Seat = require("../models/seat");
 
 const seatRouter = express.Router();
 
-// get list of seat based on plateNumber
+// get list of seat based on plateNumber and coach
 seatRouter.get("/api/seat/:id/:coach", async (req, res) => {
   try {
     const coachLetter = req.params.coach;
     const availableSeats = await Seat.find({
       train: req.params.id,
-      seatNumber: { $regex: new RegExp(`^${coachLetter}`, "i") }, // Dynamically insert the coach letter
+      seatNumber: { $regex: new RegExp(`^${coachLetter}`, "i") }, 
     });
     res.status(200).json(availableSeats);
   } catch (error) {
     return res.status(400).json({ msg: "Error fetching seat" });
   }
 });
+
+// get details seat and train based on name
+seatRouter.get("/api/seats-with-train/:owner", async (req, res) => {
+  try {
+    // Find seats where the owner is 
+    const owner = req.params.owner;
+    const seats = await Seat.find({ owner: owner })
+      .populate("train") 
+      .exec();
+
+    // if (!seats) {
+    //   return res
+    //     .status(404)
+    //     .json({ message: "No seats found for owner" });
+    // }
+
+    res.status(200).json(seats); // Return the seats and train details
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving data", error });
+  }
+});
+
 
 //Book a seat
 seatRouter.patch("/api/seat/book-seat", async (req, res) => {

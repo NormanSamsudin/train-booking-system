@@ -1,7 +1,8 @@
 import 'package:booking_app/models/train.dart';
-import 'package:booking_app/views/screens/detail_screens/booking_details_screen.dart';
+import 'package:booking_app/views/screens/detail_screens/booking/booking_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:booking_app/controllers/train_controller.dart';
+import 'package:intl/intl.dart';
 
 class TrainCardWidget extends StatefulWidget {
   const TrainCardWidget({super.key});
@@ -12,6 +13,7 @@ class TrainCardWidget extends StatefulWidget {
 
 class _TrainCardWidgetState extends State<TrainCardWidget> {
   late Future<List<TrainModel>> futureTrain;
+  DateFormat dateFormat = DateFormat('EEEE, MMMM d, yyyy, h:mm a');
 
   @override
   void initState() {
@@ -23,8 +25,8 @@ class _TrainCardWidgetState extends State<TrainCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8, right: 8),
-      child:  SizedBox(
+      padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+      child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.8 - 32,
         child: FutureBuilder(
             future: futureTrain,
@@ -64,14 +66,13 @@ class _TrainCardWidgetState extends State<TrainCardWidget> {
                               style: const TextStyle(
                                   color: Colors.white, fontSize: 15)),
                           subtitle: Text(
-                            '${train[index].startDateTime} | 2.30 pm',
+                            dateFormat.format(DateTime.parse(train[index].startDateTime)),
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 12),
                           ),
                         ),
                       ),
                       onTap: () {
-
                         Navigator.push(
                           context,
                           MaterialPageRoute(

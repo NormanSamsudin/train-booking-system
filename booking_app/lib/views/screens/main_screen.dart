@@ -9,7 +9,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _pageIndex = 0;
+  int _pageIndex = 1;
   final List<Widget> _pages = [HomeScreen(), HistoryScreen(), AccountScreen()];
 
   @override
