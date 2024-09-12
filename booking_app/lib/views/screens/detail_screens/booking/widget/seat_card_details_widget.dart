@@ -190,14 +190,14 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                             .bookSeat(widget.train.id, selectedSeats, fullName);
                         Navigator.pop(context);
                         Navigator.pop(context);
-                        showSnackBar(context, 'Booking successful');
+                        showSnackBar(context, 'Payment successful');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xCC0D6EFF),
                         shadowColor: const Color(0xFF102DE1),
                       ),
                       child: const Text(
-                        'Confirm',
+                        'Pay Now',
                         style:
                             TextStyle(letterSpacing: 1.5, color: Colors.white),
                       ),
