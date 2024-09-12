@@ -33,13 +33,13 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+        padding: const EdgeInsets.only(left: 8, right: 8, top: 15),
         child: SizedBox(
-            height: 300,
+            height: 320,
             child: Column(
               children: [
                 SizedBox(
-                  height: 240,
+                  height: 272,
                   child: FutureBuilder(
                     future: futureSeat,
                     builder: (context, snapshot) {
@@ -57,9 +57,11 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4, // 2 items per row
-                            crossAxisSpacing: 30.0,
-                            mainAxisSpacing: 8.0,
+                            crossAxisCount: 4, 
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 5,
+                            childAspectRatio: 2.0
+
                           ),
                           itemCount: seat.length,
                           itemBuilder: (context, index) {
@@ -88,7 +90,7 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                                       Icon(
                                         Icons.chair,
                                         color: seatColor,
-                                        size: 50.0,
+                                        size: 35.0,
                                       ),
                                       Text(
                                         seat[index].seatNumber,
@@ -97,7 +99,7 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                                           color: const Color(0xFF0d120E),
                                           fontWeight: FontWeight.bold,
                                           letterSpacing: 0.2,
-                                          fontSize: 14,
+                                          fontSize: 8,
                                         ),
                                       )
                                     ],
@@ -139,7 +141,7 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                     },
                   ),
                 ),
-                const Spacer(),
+
                 Row(
                   children: [
                     const Spacer(),
@@ -172,7 +174,7 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                     )
                   ],
                 ),
-                const Spacer()
+          
               ],
             )));
   }
