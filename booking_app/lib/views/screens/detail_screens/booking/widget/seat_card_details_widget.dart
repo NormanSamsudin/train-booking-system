@@ -112,8 +112,7 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                                           seat[index]); // Add to selected seats
                                     });
                                   } else if (seat[index].status == 'locked') {
-                                    if (selectedSeats
-                                        .contains(seat[index])) {
+                                    if (selectedSeats.contains(seat[index])) {
                                       SeatController().unlockSeat(
                                           widget.train.id,
                                           seat[index].seatNumber);
@@ -122,8 +121,7 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                                         selectedSeats.remove(seat[
                                             index]); // Remove from selected seats
                                       });
-                                      selectedSeats
-                                          .remove(seat[index]);
+                                      selectedSeats.remove(seat[index]);
                                     } else {
                                       debugPrint("seat is not available");
                                       Navigator.of(context).pop();
@@ -150,6 +148,22 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(204, 255, 255, 255),
+                        shadowColor: const Color.fromARGB(255, 201, 201, 201),
+                        foregroundColor: Colors.black
+                      ),
+                      child: const Text(
+                        'Cancel',
+                        style:
+                            TextStyle(letterSpacing: 1.5, color: Colors.black),
+                      ),
+                    ),
+                    const SizedBox(width: 15,),
+                    ElevatedButton(
+                      onPressed: () {
                         for (var select in selectedSeats) {
                           debugPrint('${select.seatNumber} : ${select.status}');
                         }
@@ -170,7 +184,7 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                       ),
                     ),
                     const SizedBox(
-                      width: 50,
+                      width: 20,
                     )
                   ],
                 ),

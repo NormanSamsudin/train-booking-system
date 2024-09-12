@@ -78,7 +78,7 @@ class SeatController {
       debugPrint(response.body);
 
       if (response.statusCode == 200) {
-        debugPrint('locked successfully');
+        debugPrint('unlocked successfully');
         // List<dynamic> data = jsonDecode(response.body);
         // List<SeatModel> trains =
         //     data.map((train) => SeatModel.fromJson(train)).toList();
