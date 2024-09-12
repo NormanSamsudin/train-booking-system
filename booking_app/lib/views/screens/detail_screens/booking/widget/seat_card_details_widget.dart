@@ -57,12 +57,10 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4, 
-                            crossAxisSpacing: 5,
-                            mainAxisSpacing: 5,
-                            childAspectRatio: 2.0
-
-                          ),
+                                  crossAxisCount: 4,
+                                  crossAxisSpacing: 5,
+                                  mainAxisSpacing: 5,
+                                  childAspectRatio: 2.0),
                           itemCount: seat.length,
                           itemBuilder: (context, index) {
                             //declare colors
@@ -81,7 +79,6 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                                 seatColor =
                                     Colors.red; // Unavailable seats are red
                             }
-
                             return GridTile(
                               child: InkWell(
                                 child: SizedBox(
@@ -115,17 +112,24 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                                           seat[index]); // Add to selected seats
                                     });
                                   } else if (seat[index].status == 'locked') {
-                                    // SeatController().unlockSeat(
-                                    //     widget.train.id, seat[index].seatNumber);
-                                    // setState(() {
-                                    //   seat[index].status = 'available';
-                                    //   selectedSeats.remove(
-                                    //       seat[index]); // Remove from selected seats
-                                    // });
-                                    debugPrint("seat is not available");
-                                    Navigator.of(context).pop();
-                                    showSnackBar(context,
-                                        'Seat have been locked by others');
+                                    if (selectedSeats
+                                        .contains(seat[index])) {
+                                      SeatController().unlockSeat(
+                                          widget.train.id,
+                                          seat[index].seatNumber);
+                                      setState(() {
+                                        seat[index].status = 'available';
+                                        selectedSeats.remove(seat[
+                                            index]); // Remove from selected seats
+                                      });
+                                      selectedSeats
+                                          .remove(seat[index]);
+                                    } else {
+                                      debugPrint("seat is not available");
+                                      Navigator.of(context).pop();
+                                      showSnackBar(context,
+                                          'Seat have been locked by others');
+                                    }
                                   } else {
                                     debugPrint("seat is not available");
                                     Navigator.of(context).pop();
@@ -141,7 +145,6 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                     },
                   ),
                 ),
-
                 Row(
                   children: [
                     const Spacer(),
@@ -150,11 +153,8 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                         for (var select in selectedSeats) {
                           debugPrint('${select.seatNumber} : ${select.status}');
                         }
-                        SeatController().bookSeat(
-                          widget.train.id,
-                          selectedSeats,
-                          fullName
-                        );
+                        SeatController()
+                            .bookSeat(widget.train.id, selectedSeats, fullName);
                         Navigator.pop(context);
                         Navigator.pop(context);
                         showSnackBar(context, 'Booking successful');
@@ -174,7 +174,6 @@ class _SeatCardDetailsWidgetState extends State<SeatCardDetailsWidget> {
                     )
                   ],
                 ),
-          
               ],
             )));
   }
